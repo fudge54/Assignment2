@@ -1,6 +1,8 @@
 package sait.bankonit.gui;
 
-import javax.swing.JFrame;
+import java.awt.BorderLayout;
+
+import javax.swing.*;
 
 import ca.bankonit.models.Account;
 
@@ -26,6 +28,38 @@ public class AccountWindow extends JFrame {
 
 		// Set size to 600x500
 		this.setSize(600, 500);
+
+		// set termination process
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		JPanel topPanel = createTopPanel();
+		JPanel centerPanel = createCenterPanel();
+		JPanel bottomPanel = createBottomPanel();
+
+		this.add(topPanel, BorderLayout.NORTH);
+		this.add(centerPanel, BorderLayout.CENTER);
+		this.add(bottomPanel, BorderLayout.SOUTH);
+
+	}
+
+	private JPanel createTopPanel() {
+		JPanel panel = new JPanel();
+		String cardNumber = String.valueOf(account.getCardNumber());
+
+		JLabel cardNum = new JLabel(cardNumber);
+		JLabel balance = new JLabel("test");
+
+		panel.add(cardNum);
+		panel.add(balance);
+		return panel;
+	}
+
+	private JPanel createCenterPanel() {
+
+	}
+
+	private JPanel createBottomPanel() {
+
 	}
 
 	/**
