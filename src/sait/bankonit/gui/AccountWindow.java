@@ -1,8 +1,6 @@
 package sait.bankonit.gui;
 
-import java.awt.*;
-
-import javax.swing.*;
+import javax.swing.JFrame;
 
 import ca.bankonit.models.Account;
 
