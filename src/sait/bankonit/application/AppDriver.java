@@ -25,6 +25,7 @@ public class AppDriver {
 		Account account = BankManagerBroker.getInstance().login(cardNumber, pin);
 		AccountWindow accountWindow = new AccountWindow(account);
 		accountWindow.setVisible(true);
+		System.out.println(account.toString());
 		//
 
 		/* Uncomment for version 4.0 */

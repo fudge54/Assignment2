@@ -1,6 +1,7 @@
 package sait.bankonit.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -18,7 +19,8 @@ import ca.bankonit.models.Transaction;
  */
 public class AccountWindow extends JFrame {
 	private Account account;
-	BankManager test = new BankManager();
+	private BankManager test = new BankManager();
+	private String Bal;
 
 	/**
 	 * Initializes the account window
@@ -51,8 +53,10 @@ public class AccountWindow extends JFrame {
 		JPanel panel = new JPanel();
 		String cardNumber = String.valueOf(account.getCardNumber());
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		JLabel cardNum = new JLabel(cardNumber);
-		JLabel balance = new JLabel("test");
+		String bal = calcBal();
+		JLabel cardNum = new JLabel("Card #" + cardNumber);
+		cardNum.setFont(new Font("Serif", Font.BOLD, 20));
+		JLabel balance = new JLabel(bal);
 
 		((JComponent) panel.add(cardNum)).setAlignmentX(CENTER_ALIGNMENT);
 		((JComponent) panel.add(balance)).setAlignmentX(CENTER_ALIGNMENT);
@@ -64,8 +68,8 @@ public class AccountWindow extends JFrame {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		JTextArea textBox = new JTextArea();
 		JScrollPane scrollPane = new JScrollPane(textBox);
-		scrollPane.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
-		
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
 		textBox.setEditable(false);
 		panel.add(scrollPane);
 
@@ -80,9 +84,8 @@ public class AccountWindow extends JFrame {
 		} catch (InvalidAccountException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("nope");
+			System.out.println("Something went wrong.");
 		}
-		
 
 		return panel;
 	}
@@ -97,6 +100,39 @@ public class AccountWindow extends JFrame {
 	 * Clears and re-populates transactions as well as updates balance.
 	 */
 	private void populateTransactions() {
+		createCenterPanel();
+		createTopPanel();
+	}
 
+	private String calcBal() {
+		String balance = "";
+		double bal = 0;
+		ArrayList<Transaction> transactions;
+
+		try {
+
+			transactions = test.getTransactionsForAccount(account);
+			Transaction oneT;
+
+			for (int i = 0; i < transactions.size(); i++) {
+				oneT = transactions.get(i);
+				if (oneT.getTransactionType() == 'D') {
+					bal -= oneT.getAmount();
+				} else {
+					bal += oneT.getAmount();
+				}
+			}
+			if (bal >= 0) {
+				balance = String.format("Balance: $%.2f", bal);
+			} else {
+				balance = String.format("Balance: $-%.2f", bal);
+			}
+
+		} catch (InvalidAccountException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return balance;
 	}
 }
