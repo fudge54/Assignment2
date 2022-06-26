@@ -56,7 +56,21 @@ public class AccountWindow extends JFrame {
 
 	private JPanel createCenterPanel() {
 		JPanel panel = new JPanel();
-
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		JTextArea t = new JTextArea();
+		JScrollPane scrollPane = new JScrollPane(t);
+		
+	
+		panel.add(t);
+		t.setEditable(false);
+		t.add(scrollPane);
+		
+		
+		
+		t.setText(somethinsomething);
+		t.append("There");
+		
+		
 		return panel;
 	}
 
