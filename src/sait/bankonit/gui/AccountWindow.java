@@ -1,10 +1,14 @@
 package sait.bankonit.gui;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
+import ca.bankonit.exceptions.InvalidAccountException;
+import ca.bankonit.manager.BankManager;
 import ca.bankonit.models.Account;
+import ca.bankonit.models.Transaction;
 
 /**
  * Renders the account window.
@@ -14,6 +18,7 @@ import ca.bankonit.models.Account;
  */
 public class AccountWindow extends JFrame {
 	private Account account;
+	BankManager test = new BankManager();
 
 	/**
 	 * Initializes the account window
@@ -57,20 +62,28 @@ public class AccountWindow extends JFrame {
 	private JPanel createCenterPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		JTextArea t = new JTextArea();
-		JScrollPane scrollPane = new JScrollPane(t);
-		
-	
-		panel.add(t);
-		t.setEditable(false);
-		t.add(scrollPane);
-		
-		
-		
-		t.setText(somethinsomething);
-		t.append("There");
-		
-		
+		JTextArea textBox = new JTextArea();
+		JScrollPane scrollPane = new JScrollPane(textBox);
+
+		panel.add(textBox);
+		textBox.setEditable(false);
+		textBox.add(scrollPane);
+
+		ArrayList<Transaction> transactions;
+		try {
+
+			transactions = test.getTransactionsForAccount(account);
+			for (int i = 0; i < transactions.size(); i++) {
+				textBox.append(transactions.get(i).toString());
+				textBox.append("\r\n");
+			}
+		} catch (InvalidAccountException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("nope");
+		}
+		textBox.append("There");
+
 		return panel;
 	}
 
