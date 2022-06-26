@@ -45,21 +45,25 @@ public class AccountWindow extends JFrame {
 	private JPanel createTopPanel() {
 		JPanel panel = new JPanel();
 		String cardNumber = String.valueOf(account.getCardNumber());
-
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		JLabel cardNum = new JLabel(cardNumber);
 		JLabel balance = new JLabel("test");
 
-		panel.add(cardNum);
-		panel.add(balance);
+		((JComponent) panel.add(cardNum)).setAlignmentX(CENTER_ALIGNMENT);
+		((JComponent) panel.add(balance)).setAlignmentX(CENTER_ALIGNMENT);
 		return panel;
 	}
 
 	private JPanel createCenterPanel() {
+		JPanel panel = new JPanel();
 
+		return panel;
 	}
 
 	private JPanel createBottomPanel() {
+		JPanel panel = new JPanel();
 
+		return panel;
 	}
 
 	/**
