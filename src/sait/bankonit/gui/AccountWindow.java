@@ -64,10 +64,10 @@ public class AccountWindow extends JFrame {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		JTextArea textBox = new JTextArea();
 		JScrollPane scrollPane = new JScrollPane(textBox);
-
-		panel.add(textBox);
+		scrollPane.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
+		
 		textBox.setEditable(false);
-		textBox.add(scrollPane);
+		panel.add(scrollPane);
 
 		ArrayList<Transaction> transactions;
 		try {
@@ -82,7 +82,7 @@ public class AccountWindow extends JFrame {
 			e.printStackTrace();
 			System.out.println("nope");
 		}
-		textBox.append("There");
+		
 
 		return panel;
 	}
