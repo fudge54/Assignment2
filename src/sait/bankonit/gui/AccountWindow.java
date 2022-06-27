@@ -34,7 +34,14 @@ import ca.bankonit.models.Transaction;
 public class AccountWindow extends JFrame {
 	private Account account;
 	private BankManager test = new BankManager();
-	private int dorw = 0;
+	private char dorw = 'X';
+	JRadioButton deposit;
+	JRadioButton withdraw;
+	JTextField input;
+	JButton submit;
+	JButton signOut;
+	ArrayList<Transaction> transactions;
+	double amount;
 
 	/**
 	 * Initializes the account window
@@ -87,7 +94,6 @@ public class AccountWindow extends JFrame {
 		textBox.setEditable(false);
 		panel.add(scrollPane);
 
-		ArrayList<Transaction> transactions;
 		try {
 
 			transactions = test.getTransactionsForAccount(account);
@@ -110,9 +116,9 @@ public class AccountWindow extends JFrame {
 		panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 40, 10));
 		panel.add(type, BorderLayout.NORTH);
 
-		JRadioButton deposit = new JRadioButton("Deposit");
+		deposit = new JRadioButton("Deposit");
 		panel.add(deposit, BorderLayout.NORTH);
-		JRadioButton withdraw = new JRadioButton("Withdraw");
+		withdraw = new JRadioButton("Withdraw");
 		panel.add(withdraw, BorderLayout.NORTH);
 		ButtonGroup transactionType = new ButtonGroup();
 		transactionType.add(withdraw);
@@ -120,11 +126,11 @@ public class AccountWindow extends JFrame {
 
 		JLabel amount = new JLabel("Amount:");
 		panel.add(amount, BorderLayout.NORTH);
-		JTextField input = new JTextField(20);
+		input = new JTextField(20);
 		panel.add(input, BorderLayout.NORTH);
-		JButton submit = new JButton("Submit");
+		submit = new JButton("Submit");
 		panel.add(submit, BorderLayout.NORTH);
-		JButton signOut = new JButton("Sign Out");
+		signOut = new JButton("Sign Out");
 		panel.add(signOut, BorderLayout.SOUTH);
 
 		ActionListener listener = new MyActionListener();
@@ -148,7 +154,6 @@ public class AccountWindow extends JFrame {
 	private String calcBal() {
 		String balance = "";
 		double bal = 0;
-		ArrayList<Transaction> transactions;
 
 		try {
 
@@ -183,9 +188,21 @@ public class AccountWindow extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == deposit) {
-				dorw = 1;
+				dorw = 'D';
 			} else if (e.getSource() == withdraw) {
-				dorw = 2;
+				dorw = 'W';
+			}
+			if (e.getSource() == input) {
+				amount = Double.parseDouble(input.getText());
+			}
+
+			if (e.getSource() == submit) {
+
+				if (dorw == 'D') {
+
+					transactions.add(account.getCardNumber(), dorw, amount, date);
+				}
+
 			}
 
 		}
