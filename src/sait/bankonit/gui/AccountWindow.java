@@ -20,7 +20,6 @@ import ca.bankonit.models.Transaction;
 public class AccountWindow extends JFrame {
 	private Account account;
 	private BankManager test = new BankManager();
-	private String Bal;
 
 	/**
 	 * Initializes the account window
@@ -92,6 +91,26 @@ public class AccountWindow extends JFrame {
 
 	private JPanel createBottomPanel() {
 		JPanel panel = new JPanel();
+		JLabel type = new JLabel("Type: ");
+		panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 40, 10));
+		panel.add(type, BorderLayout.NORTH);
+
+		JRadioButton deposit = new JRadioButton("Deposit");
+		panel.add(deposit, BorderLayout.NORTH);
+		JRadioButton withdraw = new JRadioButton("Withdraw");
+		panel.add(withdraw, BorderLayout.NORTH);
+		ButtonGroup transactionType = new ButtonGroup();
+		transactionType.add(withdraw);
+		transactionType.add(deposit);
+
+		JLabel amount = new JLabel("Amount:");
+		panel.add(amount, BorderLayout.NORTH);
+		JTextField input = new JTextField(20);
+		panel.add(input, BorderLayout.NORTH);
+		JButton submit = new JButton("Submit");
+		panel.add(submit, BorderLayout.NORTH);
+		JButton signOut = new JButton("Sign Out");
+		panel.add(signOut, BorderLayout.SOUTH);
 
 		return panel;
 	}
