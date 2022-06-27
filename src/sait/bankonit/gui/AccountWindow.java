@@ -2,9 +2,23 @@ package sait.bankonit.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import ca.bankonit.exceptions.InvalidAccountException;
 import ca.bankonit.manager.BankManager;
@@ -154,4 +168,12 @@ public class AccountWindow extends JFrame {
 
 		return balance;
 	}
+
+	private class MyActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		}
+
+	}
+
 }
