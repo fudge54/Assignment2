@@ -200,7 +200,7 @@ public class AccountWindow extends JFrame {
 
 				if (dorw == 'D') {
 
-					transactions.add(account.getCardNumber(), dorw, amount, date);
+					transactions.add(account.getCardNumber(), dorw, amount, java.util.Date);
 				}
 
 			}
