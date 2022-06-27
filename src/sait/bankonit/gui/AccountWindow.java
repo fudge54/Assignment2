@@ -5,20 +5,9 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 
 import ca.bankonit.exceptions.InvalidAccountException;
 import ca.bankonit.manager.BankManager;
@@ -113,32 +102,36 @@ public class AccountWindow extends JFrame {
 	private JPanel createBottomPanel() {
 		JPanel panel = new JPanel();
 		JLabel type = new JLabel("Type: ");
+		ActionListener listener = new MyActionListener();
+
 		panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 40, 10));
 		panel.add(type, BorderLayout.NORTH);
 
 		deposit = new JRadioButton("Deposit");
+		deposit.addActionListener(listener);
 		panel.add(deposit, BorderLayout.NORTH);
+
 		withdraw = new JRadioButton("Withdraw");
+		withdraw.addActionListener(listener);
 		panel.add(withdraw, BorderLayout.NORTH);
+
 		ButtonGroup transactionType = new ButtonGroup();
 		transactionType.add(withdraw);
 		transactionType.add(deposit);
 
 		JLabel amount = new JLabel("Amount:");
 		panel.add(amount, BorderLayout.NORTH);
+
 		input = new JTextField(20);
 		panel.add(input, BorderLayout.NORTH);
+
 		submit = new JButton("Submit");
-		panel.add(submit, BorderLayout.NORTH);
-		signOut = new JButton("Sign Out");
-		panel.add(signOut, BorderLayout.SOUTH);
-
-		ActionListener listener = new MyActionListener();
-
 		submit.addActionListener(listener);
-		withdraw.addActionListener(listener);
-		deposit.addActionListener(listener);
+		panel.add(submit, BorderLayout.NORTH);
+
+		signOut = new JButton("Sign Out");
 		signOut.addActionListener(listener);
+		panel.add(signOut, BorderLayout.SOUTH);
 
 		return panel;
 	}
@@ -197,11 +190,17 @@ public class AccountWindow extends JFrame {
 			}
 
 			if (e.getSource() == submit) {
-
+				java.util.Date date = new Date();
+				long accountNum = account.getCardNumber();
 				if (dorw == 'D') {
-
-					transactions.add(account.getCardNumber(), dorw, amount, java.util.Date);
+					Transaction userTran = new Transaction(accountNum, dorw, amount, date);
+					transactions.add(userTran);
+				} else if (dorw == 'W') {
+					amount *= (-1);
+					Transaction userTran = new Transaction(accountNum, dorw, amount, date);
+					transactions.add(userTran);
 				}
+				populateTransactions();
 
 			}
 
