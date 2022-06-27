@@ -34,6 +34,7 @@ import ca.bankonit.models.Transaction;
 public class AccountWindow extends JFrame {
 	private Account account;
 	private BankManager test = new BankManager();
+	private int dorw = 0;
 
 	/**
 	 * Initializes the account window
@@ -126,6 +127,13 @@ public class AccountWindow extends JFrame {
 		JButton signOut = new JButton("Sign Out");
 		panel.add(signOut, BorderLayout.SOUTH);
 
+		ActionListener listener = new MyActionListener();
+
+		submit.addActionListener(listener);
+		withdraw.addActionListener(listener);
+		deposit.addActionListener(listener);
+		signOut.addActionListener(listener);
+
 		return panel;
 	}
 
@@ -171,7 +179,15 @@ public class AccountWindow extends JFrame {
 
 	private class MyActionListener implements ActionListener {
 		@Override
+
 		public void actionPerformed(ActionEvent e) {
+
+			if (e.getSource() == deposit) {
+				dorw = 1;
+			} else if (e.getSource() == withdraw) {
+				dorw = 2;
+			}
+
 		}
 
 	}
