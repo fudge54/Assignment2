@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.swing.*;
 
@@ -21,16 +20,22 @@ import ca.bankonit.models.Transaction;
  * @version Aug 3, 2021
  */
 public class AccountWindow extends JFrame {
+
 	private Account account;
-	private BankManager test = new BankManager();
+	private BankManager bankManager = new BankManager();
 	private char dorw = 'X';
-	JRadioButton deposit;
-	JRadioButton withdraw;
-	JTextField input;
-	JButton submit;
-	JButton signOut;
-	ArrayList<Transaction> transactions;
-	double amount;
+	private JRadioButton deposit;
+	private JRadioButton withdraw;
+	private JTextField input;
+	private JButton submit;
+	private JButton signOut;
+	private ArrayList<Transaction> transactions;
+	private JPanel cPanel;
+	private double amount = 0;
+	private ActionListener listener;
+	private JTextArea textBox;
+	private JLabel balance;
+	private JPanel bPanel;
 
 	/**
 	 * Initializes the account window
@@ -49,6 +54,8 @@ public class AccountWindow extends JFrame {
 		// set termination process
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		listener = new MyActionListener();
+
 		JPanel topPanel = createTopPanel();
 		JPanel centerPanel = createCenterPanel();
 		JPanel bottomPanel = createBottomPanel();
@@ -66,7 +73,7 @@ public class AccountWindow extends JFrame {
 		String bal = calcBal();
 		JLabel cardNum = new JLabel("Card #" + cardNumber);
 		cardNum.setFont(new Font("Serif", Font.BOLD, 20));
-		JLabel balance = new JLabel(bal);
+		balance = new JLabel(bal);
 
 		((JComponent) panel.add(cardNum)).setAlignmentX(CENTER_ALIGNMENT);
 		((JComponent) panel.add(balance)).setAlignmentX(CENTER_ALIGNMENT);
@@ -74,18 +81,65 @@ public class AccountWindow extends JFrame {
 	}
 
 	private JPanel createCenterPanel() {
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		JTextArea textBox = new JTextArea();
+		cPanel = new JPanel();
+		cPanel.setLayout(new BoxLayout(cPanel, BoxLayout.Y_AXIS));
+		textBox = new JTextArea();
 		JScrollPane scrollPane = new JScrollPane(textBox);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 		textBox.setEditable(false);
-		panel.add(scrollPane);
+		cPanel.add(scrollPane);
 
+		populateTransactions();
+		return cPanel;
+	}
+
+	private JPanel createBottomPanel() {
+		bPanel = new JPanel();
+		JLabel type = new JLabel("Type: ");
+
+		bPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 40, 10));
+		bPanel.add(type, BorderLayout.NORTH);
+
+		deposit = new JRadioButton("Deposit");
+		deposit.addActionListener(listener);
+		bPanel.add(deposit, BorderLayout.NORTH);
+
+		withdraw = new JRadioButton("Withdraw");
+		withdraw.addActionListener(listener);
+		bPanel.add(withdraw, BorderLayout.NORTH);
+
+		ButtonGroup transactionType = new ButtonGroup();
+		transactionType.add(withdraw);
+		transactionType.add(deposit);
+
+		JLabel amount = new JLabel("Amount:");
+		bPanel.add(amount, BorderLayout.NORTH);
+
+		input = new JTextField(20);
+		bPanel.add(input, BorderLayout.NORTH);
+
+		submit = new JButton("Submit");
+		submit.addActionListener(listener);
+		submit.revalidate();
+		bPanel.add(submit, BorderLayout.NORTH);
+
+		signOut = new JButton("Sign Out");
+		signOut.addActionListener(listener);
+		bPanel.add(signOut, BorderLayout.SOUTH);
+
+		return bPanel;
+	}
+
+	/**
+	 * Clears and re-populates transactions as well as updates balance.
+	 */
+	private void populateTransactions() {
+
+		// createTopPanel();
 		try {
-
-			transactions = test.getTransactionsForAccount(account);
+			textBox.setText("");
+			transactions = bankManager.getTransactionsForAccount(account);
 			for (int i = 0; i < transactions.size(); i++) {
 				textBox.append(transactions.get(i).toString());
 				textBox.append("\r\n");
@@ -95,53 +149,8 @@ public class AccountWindow extends JFrame {
 			e.printStackTrace();
 			System.out.println("Something went wrong.");
 		}
+		balance.setText(calcBal());
 
-		return panel;
-	}
-
-	private JPanel createBottomPanel() {
-		JPanel panel = new JPanel();
-		JLabel type = new JLabel("Type: ");
-		ActionListener listener = new MyActionListener();
-
-		panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 40, 10));
-		panel.add(type, BorderLayout.NORTH);
-
-		deposit = new JRadioButton("Deposit");
-		deposit.addActionListener(listener);
-		panel.add(deposit, BorderLayout.NORTH);
-
-		withdraw = new JRadioButton("Withdraw");
-		withdraw.addActionListener(listener);
-		panel.add(withdraw, BorderLayout.NORTH);
-
-		ButtonGroup transactionType = new ButtonGroup();
-		transactionType.add(withdraw);
-		transactionType.add(deposit);
-
-		JLabel amount = new JLabel("Amount:");
-		panel.add(amount, BorderLayout.NORTH);
-
-		input = new JTextField(20);
-		panel.add(input, BorderLayout.NORTH);
-
-		submit = new JButton("Submit");
-		submit.addActionListener(listener);
-		panel.add(submit, BorderLayout.NORTH);
-
-		signOut = new JButton("Sign Out");
-		signOut.addActionListener(listener);
-		panel.add(signOut, BorderLayout.SOUTH);
-
-		return panel;
-	}
-
-	/**
-	 * Clears and re-populates transactions as well as updates balance.
-	 */
-	private void populateTransactions() {
-		createCenterPanel();
-		createTopPanel();
 	}
 
 	private String calcBal() {
@@ -150,22 +159,19 @@ public class AccountWindow extends JFrame {
 
 		try {
 
-			transactions = test.getTransactionsForAccount(account);
+			transactions = bankManager.getTransactionsForAccount(account);
 			Transaction oneT;
 
 			for (int i = 0; i < transactions.size(); i++) {
 				oneT = transactions.get(i);
 				if (oneT.getTransactionType() == 'D') {
-					bal -= oneT.getAmount();
-				} else {
 					bal += oneT.getAmount();
+				} else {
+					bal -= oneT.getAmount();
 				}
 			}
-			if (bal >= 0) {
-				balance = String.format("Balance: $%.2f", bal);
-			} else {
-				balance = String.format("Balance: $-%.2f", bal);
-			}
+
+			balance = String.format("Balance: $%.2f", bal);
 
 		} catch (InvalidAccountException e) {
 			// TODO Auto-generated catch block
@@ -185,25 +191,37 @@ public class AccountWindow extends JFrame {
 			} else if (e.getSource() == withdraw) {
 				dorw = 'W';
 			}
-			if (e.getSource() == input) {
-				amount = Double.parseDouble(input.getText());
-			}
+			// if (e.getSource() == input) {
+
+			// }
 
 			if (e.getSource() == submit) {
-				java.util.Date date = new Date();
-				long accountNum = account.getCardNumber();
-				if (dorw == 'D') {
-					Transaction userTran = new Transaction(accountNum, dorw, amount, date);
-					transactions.add(userTran);
-				} else if (dorw == 'W') {
-					amount *= (-1);
-					Transaction userTran = new Transaction(accountNum, dorw, amount, date);
-					transactions.add(userTran);
+
+				try {
+					amount = Double.parseDouble(input.getText());
+					if (dorw == 'D') {
+						bankManager.deposit(account, amount);
+					} else if (dorw == 'W') {
+						bankManager.withdraw(account, amount);
+					}
+				} catch (InvalidAccountException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(bPanel, "Amount input is not a valid Double.");
 				}
-				populateTransactions();
+			}
+			input.setText("");
+			populateTransactions();
+			bankManager.persist();
+
+			if (e.getSource() == signOut) {
+				JOptionPane.showMessageDialog(AccountWindow.this, "Goodbye");
+
+				AccountWindow.this.dispose();
 
 			}
-
 		}
 
 	}
