@@ -1,14 +1,12 @@
 package sait.bankonit.application;
 
-import ca.bankonit.manager.BankManagerBroker;
-import ca.bankonit.models.Account;
-import sait.bankonit.gui.AccountWindow;
+import sait.bankonit.gui.LoginWindow;
 
 /**
  * Application driver
  * 
- * @author Nick Hamnett
- * @version August 3, 2021
+ * @author Andrew Wahlers(775340)
+ * @version
  */
 public class AppDriver {
 
@@ -19,19 +17,19 @@ public class AppDriver {
 	 */
 	public static void main(String[] args) {
 		/* Uncomment for versions 1.0 - 3.0 */
-		long cardNumber = 4444111122223333L;
-		short pin = 4444;
+		// long cardNumber = 4444111122223333L;
+		// short pin = 4444;
 		//
-		Account account = BankManagerBroker.getInstance().login(cardNumber, pin);
-		AccountWindow accountWindow = new AccountWindow(account);
-		accountWindow.setVisible(true);
-		System.out.println(account.toString());
+		// Account account = BankManagerBroker.getInstance().login(cardNumber, pin);
+		// AccountWindow accountWindow = new AccountWindow(account);
+		// accountWindow.setVisible(true);
+		// System.out.println(account.toString());
 		//
 
 		/* Uncomment for version 4.0 */
-		// LoginWindow login = new LoginWindow();
-		// login.setVisible(true);
-		//
+		LoginWindow login = new LoginWindow();
+		login.setVisible(true);
+
 	}
 
 }
