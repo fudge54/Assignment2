@@ -13,8 +13,8 @@ import ca.bankonit.models.Account;
 /**
  * Renders the login window
  * 
- * @author Nick Hamnett
- * @version Aug 3, 2021
+ * @author Andrew Wahlers(775340)
+ * @version June 30/22
  */
 public class LoginWindow extends JFrame {
 	private JTextField cardNum; // Card Number input field

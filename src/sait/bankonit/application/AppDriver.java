@@ -5,8 +5,8 @@ import sait.bankonit.gui.LoginWindow;
 /**
  * Application driver
  * 
- * @author Nick Hamnett
- * @version August 3, 2021
+ * @author Andrew Wahlers(775340)
+ * @version
  */
 public class AppDriver {
 
