@@ -6,7 +6,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import ca.bankonit.exceptions.InvalidAccountException;
 import ca.bankonit.manager.BankManager;
@@ -21,10 +34,10 @@ import ca.bankonit.models.Transaction;
  */
 public class AccountWindow extends JFrame {
 
-	private Account account;
-	private BankManager bankManager = new BankManager();
-	private char dorw = 'X';
-	private JRadioButton deposit;
+	private Account account; // Declares Account object globally.
+	private BankManager bankManager = new BankManager(); // Creates BankManager object globally.
+	private char dorw = 'X'; // Creates char globally.
+	private JRadioButton deposit; // Declares JRadioButton
 	private JRadioButton withdraw;
 	private JTextField input;
 	private JButton submit;
@@ -66,6 +79,11 @@ public class AccountWindow extends JFrame {
 
 	}
 
+	/**
+	 * Creates and displays top panel.
+	 * 
+	 * @return top panel of window.
+	 */
 	private JPanel createTopPanel() {
 		JPanel panel = new JPanel();
 		String cardNumber = String.valueOf(account.getCardNumber());
@@ -80,6 +98,11 @@ public class AccountWindow extends JFrame {
 		return panel;
 	}
 
+	/**
+	 * Creates and displays center panel.
+	 * 
+	 * @return center panel of window.
+	 */
 	private JPanel createCenterPanel() {
 		cPanel = new JPanel();
 		cPanel.setLayout(new BoxLayout(cPanel, BoxLayout.Y_AXIS));
@@ -94,6 +117,11 @@ public class AccountWindow extends JFrame {
 		return cPanel;
 	}
 
+	/**
+	 * Creates and displays bottom panel.
+	 * 
+	 * @return bottom panel of window.
+	 */
 	private JPanel createBottomPanel() {
 		bPanel = new JPanel();
 		JLabel type = new JLabel("Type: ");
@@ -153,6 +181,11 @@ public class AccountWindow extends JFrame {
 
 	}
 
+	/**
+	 * Calculate and display balance to the user.
+	 * 
+	 * @return Balance of account.
+	 */
 	private String calcBal() {
 		String balance = "";
 		double bal = 0;
@@ -181,6 +214,12 @@ public class AccountWindow extends JFrame {
 		return balance;
 	}
 
+	/**
+	 * Uses ActionListener to manage user input.
+	 * 
+	 * @author Daniel Bourdage-Gorny, Andrew Wahlers
+	 *
+	 */
 	private class MyActionListener implements ActionListener {
 		@Override
 
