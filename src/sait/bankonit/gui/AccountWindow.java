@@ -21,17 +21,18 @@ import ca.bankonit.models.Transaction;
  */
 public class AccountWindow extends JFrame {
 
-	private Account account; // Declares Account object globally.
-	private BankManager bankManager = new BankManager(); // Creates BankManager object globally.
-	private char dorw = 'X'; // Creates char globally.
-	private JRadioButton deposit; // Declares JRadioButton
+	// fields
+	private Account account; // Account object to hold Account info.
+	private BankManager bankManager = new BankManager(); // Creates super class object.
+	private char dorw = 'X'; // Char Variable Deposit or Withdrawal
+	private JRadioButton deposit;
 	private JRadioButton withdraw;
 	private JTextField input;
 	private JButton submit;
 	private JButton signOut;
-	private ArrayList<Transaction> transactions;
+	private ArrayList<Transaction> transactions; // Array list containing transactions of account
 	private JPanel cPanel;
-	private double amount = 0;
+	private double amount = 0; // Variable to hold transaction amount.
 	private ActionListener listener;
 	private JTextArea textBox;
 	private JLabel balance;
@@ -54,12 +55,15 @@ public class AccountWindow extends JFrame {
 		// set termination process
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		// Create action listener for frame.
 		listener = new MyActionListener();
 
+		// Call methods to create panels.
 		JPanel topPanel = createTopPanel();
 		JPanel centerPanel = createCenterPanel();
 		JPanel bottomPanel = createBottomPanel();
 
+		// Organize panels in the frame.
 		this.add(topPanel, BorderLayout.NORTH);
 		this.add(centerPanel, BorderLayout.CENTER);
 		this.add(bottomPanel, BorderLayout.SOUTH);
@@ -72,13 +76,19 @@ public class AccountWindow extends JFrame {
 	 * @return top panel of window.
 	 */
 	private JPanel createTopPanel() {
-		JPanel panel = new JPanel();
+
+		// fields
 		String cardNumber = String.valueOf(account.getCardNumber());
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		String bal = calcBal();
+		balance = new JLabel(bal);
+
+		// Create panel with layout.
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+		// populate panel with correct data
 		JLabel cardNum = new JLabel("Card #" + cardNumber);
 		cardNum.setFont(new Font("Serif", Font.BOLD, 20));
-		balance = new JLabel(bal);
 
 		((JComponent) panel.add(cardNum)).setAlignmentX(CENTER_ALIGNMENT);
 		((JComponent) panel.add(balance)).setAlignmentX(CENTER_ALIGNMENT);
@@ -91,15 +101,20 @@ public class AccountWindow extends JFrame {
 	 * @return center panel of window.
 	 */
 	private JPanel createCenterPanel() {
+
+		// Create panel with layout.
 		cPanel = new JPanel();
 		cPanel.setLayout(new BoxLayout(cPanel, BoxLayout.Y_AXIS));
 		textBox = new JTextArea();
+
+		// Add scrollpane to textArea
 		JScrollPane scrollPane = new JScrollPane(textBox);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 		textBox.setEditable(false);
 		cPanel.add(scrollPane);
 
+		// Calls method to populate panel with data.
 		populateTransactions();
 		return cPanel;
 	}
@@ -110,20 +125,25 @@ public class AccountWindow extends JFrame {
 	 * @return bottom panel of window.
 	 */
 	private JPanel createBottomPanel() {
+
+		// Create panel with layout add the following sections to north side of panel.
 		bPanel = new JPanel();
 		JLabel type = new JLabel("Type: ");
 
 		bPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 40, 10));
 		bPanel.add(type, BorderLayout.NORTH);
 
+		// Create deposit button
 		deposit = new JRadioButton("Deposit");
 		deposit.addActionListener(listener);
 		bPanel.add(deposit, BorderLayout.NORTH);
 
+		// Create withdraw button
 		withdraw = new JRadioButton("Withdraw");
 		withdraw.addActionListener(listener);
 		bPanel.add(withdraw, BorderLayout.NORTH);
 
+		// Create button group for withdraw/deposit.
 		ButtonGroup transactionType = new ButtonGroup();
 		transactionType.add(withdraw);
 		transactionType.add(deposit);
@@ -131,14 +151,17 @@ public class AccountWindow extends JFrame {
 		JLabel amount = new JLabel("Amount:");
 		bPanel.add(amount, BorderLayout.NORTH);
 
+		// Create input textbox for amount.
 		input = new JTextField(20);
 		bPanel.add(input, BorderLayout.NORTH);
 
+		// Create submit button
 		submit = new JButton("Submit");
 		submit.addActionListener(listener);
 		submit.revalidate();
 		bPanel.add(submit, BorderLayout.NORTH);
 
+		// Create sign out button on south side of panel.
 		signOut = new JButton("Sign Out");
 		signOut.addActionListener(listener);
 		bPanel.add(signOut, BorderLayout.SOUTH);
@@ -147,11 +170,12 @@ public class AccountWindow extends JFrame {
 	}
 
 	/**
-	 * Clears and re-populates transactions as well as updates balance.
+	 * Clears and re-populates transactions as well as updates balance and populates
+	 * middle panel with data.
 	 */
 	private void populateTransactions() {
 
-		// createTopPanel();
+		// Populate middle panel with data
 		try {
 			textBox.setText("");
 			transactions = bankManager.getTransactionsForAccount(account);
@@ -174,9 +198,12 @@ public class AccountWindow extends JFrame {
 	 * @return Balance of account.
 	 */
 	private String calcBal() {
+
+		// fields
 		String balance = "";
 		double bal = 0;
 
+		// try catch to calculate balance and deal with all exceptions
 		try {
 
 			transactions = bankManager.getTransactionsForAccount(account);
@@ -191,6 +218,7 @@ public class AccountWindow extends JFrame {
 				}
 			}
 
+			// format balance as string
 			balance = String.format("Balance: $%.2f", bal);
 
 		} catch (InvalidAccountException e) {
@@ -212,6 +240,7 @@ public class AccountWindow extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 
+			// if else loop to check wether deposit or withdrawal
 			if (e.getSource() == deposit) {
 				dorw = 'D';
 			} else if (e.getSource() == withdraw) {
@@ -221,8 +250,11 @@ public class AccountWindow extends JFrame {
 
 			// }
 
+			// check to detect user submission
 			if (e.getSource() == submit) {
 
+				// If statement to Call super class method to add
+				// either withdrawal or deposit and deal with exceptions
 				try {
 					amount = Double.parseDouble(input.getText());
 					if (dorw == 'D') {
@@ -238,10 +270,13 @@ public class AccountWindow extends JFrame {
 					JOptionPane.showMessageDialog(bPanel, "Amount input is not a valid Double.");
 				}
 			}
+
+			// Refresh data in window with newly added user data
 			input.setText("");
 			populateTransactions();
 			bankManager.persist();
 
+			// Display message on exit to the user
 			if (e.getSource() == signOut) {
 				JOptionPane.showMessageDialog(AccountWindow.this, "Goodbye");
 
