@@ -16,8 +16,8 @@ import ca.bankonit.models.Transaction;
 /**
  * Renders the account window.
  * 
- * @author Nick Hamnett
- * @version Aug 3, 2021
+ * @author Daniel Bourdage-Gorny , Andrew Wahlers
+ * @version 6/28/22
  */
 public class AccountWindow extends JFrame {
 
@@ -240,7 +240,7 @@ public class AccountWindow extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 
-			// if else loop to check wether deposit or withdrawal
+			// if else loop to check whether deposit or withdrawal
 			if (e.getSource() == deposit) {
 				dorw = 'D';
 			} else if (e.getSource() == withdraw) {
