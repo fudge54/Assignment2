@@ -27,7 +27,10 @@ public class AppDriver {
 		// System.out.println(account.toString());
 		//
 
-		/* Uncomment for version 4.0 */
+		/*
+		 * Uncomment for version 4.0 (Calls the login window to be created and shown to
+		 * user)
+		 */
 		LoginWindow login = new LoginWindow();
 		login.setVisible(true);
 
