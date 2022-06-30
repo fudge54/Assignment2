@@ -25,37 +25,36 @@ import ca.bankonit.models.Transaction;
 public class AccountWindow extends JFrame {
 
 	// fields
-	private Account account;
 	/** Account object to hold Account info. */
-	private BankManager bankManager = new BankManager();
+	private Account account;
 	/** Creates super class object. */
-	private char dorw = 'X';
+	private BankManager bankManager = new BankManager();
 	/** Char Variable Deposit or Withdrawal */
-	private JRadioButton deposit;
+	private char dorw = 'X';
 	/** Radio Button to choose deposit option */
-	private JRadioButton withdraw;
+	private JRadioButton deposit;
 	/** Radio Button to choose withdraw option. */
-	private JTextField input;
+	private JRadioButton withdraw;
 	/** Text box for user input. */
-	private JButton submit;
+	private JTextField input;
 	/** Button to submit transaction. */
-	private JButton signOut;
+	private JButton submit;
 	/** Button to logout of account */
-	private ArrayList<Transaction> transactions;
+	private JButton signOut;
 	/** Array list containing transactions of account */
-	private JPanel cPanel;
+	private ArrayList<Transaction> transactions;
 	/** The center panel of the window */
-	private double amount = 0;
+	private JPanel cPanel;
 	/** Variable to hold transaction amount. */
-	private ActionListener listener;
+	private double amount = 0;
 	/** Action listener to handle buttons. */
-	private JTextArea textBox;
+	private ActionListener listener;
 	/** Text Area for center panel. */
-	private JLabel balance;
+	private JTextArea textBox;
 	/** Label to display balance amount. */
-	private JPanel bPanel;
-
+	private JLabel balance;
 	/** Bottom panel of the window. */
+	private JPanel bPanel;
 
 	/**
 	 * Initializes the account window
