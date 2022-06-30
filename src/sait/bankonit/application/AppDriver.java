@@ -6,15 +6,15 @@ import sait.bankonit.gui.LoginWindow;
  * Application driver for the Bank On It program calls the loginWindow and sets
  * it visible.
  * 
- * @author Andrew Wahlers(775340)
- * @version
+ * @author Andrew Wahlers(775340) Daniel Bourdage-Gorny
+ * @version 6/30/2022
  */
 public class AppDriver {
 
 	/**
 	 * Entry point for program
 	 * 
-	 * @param args
+	 * @param args Main method
 	 */
 	public static void main(String[] args) {
 		/* Uncomment for versions 1.0 - 3.0 */
