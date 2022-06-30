@@ -11,9 +11,10 @@ import ca.bankonit.manager.BankManagerBroker;
 import ca.bankonit.models.Account;
 
 /**
- * Renders the login window Build JFrames to fill the window for the login
+ * Renders the login window, Build JFrames to fill the window for the login
  * interface Users can input their banking information and click login which
- * will pull up their account information (if information is valid)
+ * will pull up their account information (if information is valid) Calls
+ * AccountWindow.java with account information
  * 
  * @author Andrew Wahlers(775340) Daniel Bourdage-Gorny
  * @version June 30/22

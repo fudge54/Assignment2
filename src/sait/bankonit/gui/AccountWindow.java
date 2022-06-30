@@ -14,7 +14,10 @@ import ca.bankonit.models.Account;
 import ca.bankonit.models.Transaction;
 
 /**
- * Renders the account window.
+ * Renders the account window. Builds JFrames to fill the window with user
+ * account information as well as the ability to make deposits and withdrawls
+ * with the south JPanel. Information is saved and logout button sends user back
+ * to the login window.
  * 
  * @author Daniel Bourdage-Gorny , Andrew Wahlers
  * @version 6/28/22

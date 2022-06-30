@@ -3,7 +3,8 @@ package sait.bankonit.application;
 import sait.bankonit.gui.LoginWindow;
 
 /**
- * Application driver
+ * Application driver for the Bank On It program calls the loginWindow and sets
+ * it visible.
  * 
  * @author Andrew Wahlers(775340)
  * @version
