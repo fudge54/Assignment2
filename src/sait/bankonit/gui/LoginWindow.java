@@ -20,14 +20,22 @@ import ca.bankonit.models.Account;
  * @version June 30/22
  */
 public class LoginWindow extends JFrame {
-	private JTextField cardNum; // Card Number input field
-	private JPasswordField pin; // Pin input field
-	private JPanel northPanel; // North Panel with logo
-	private JPanel centerPanel; // Center panel with input boxes
-	private JPanel southPanel; // South Panel with login button
-	private JLabel bankOn; // Logo label
-	private JButton login; // Login button
-	private ActionListener listener; // Action listener
+	/** Card Number input field */
+	private JTextField cardNum;
+	/** Pin input field */
+	private JPasswordField pin;
+	/** North Panel with logo */
+	private JPanel northPanel;
+	/** Center panel with input boxes */
+	private JPanel centerPanel;
+	/** South Panel with login button */
+	private JPanel southPanel;
+	/** Logo label */
+	private JLabel bankOn;
+	/** Login button */
+	private JButton login;
+	/** Action listener */
+	private ActionListener listener;
 
 	/**
 	 * Initializes the login window. Sets the size of a window and calls for
