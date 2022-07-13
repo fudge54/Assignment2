@@ -155,6 +155,8 @@ public class LoginWindow extends JFrame {
 					long card = Long.parseLong(cardNum.getText());
 					// get pin number from the password field
 					short pinNum = Short.parseShort(new String(pin.getPassword()));
+					// clear pin
+					pin.setText("");
 					// create account with the info
 					Account account = BankManagerBroker.getInstance().login(card, pinNum);
 					// check if account is invalid

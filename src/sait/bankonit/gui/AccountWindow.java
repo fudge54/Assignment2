@@ -279,6 +279,8 @@ public class AccountWindow extends JFrame {
 						bankManager.deposit(account, amount);
 					} else if (dorw == 'W') {
 						bankManager.withdraw(account, amount);
+					} else {
+						JOptionPane.showMessageDialog(bPanel, "Please select Withdraw or Deposit.");
 					}
 				} catch (InvalidAccountException e1) {
 					// TODO Auto-generated catch block
